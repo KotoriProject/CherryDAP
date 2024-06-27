@@ -833,6 +833,175 @@
 				)
 			)
 		)
+		(symbol "Device:LED"
+			(pin_numbers hide)
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "LED"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Light emitting diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "LED diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "LED* LED_SMD:* LED_THT:*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "LED_0_1"
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 0) (xy 1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27) (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -3.048 -0.762) (xy -4.572 -2.286) (xy -3.81 -2.286) (xy -4.572 -2.286) (xy -4.572 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 -0.762) (xy -3.302 -2.286) (xy -2.54 -2.286) (xy -3.302 -2.286) (xy -3.302 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "LED_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:R"
 			(pin_numbers hide)
 			(pin_names
@@ -3150,6 +3319,16 @@
 	)
 	(wire
 		(pts
+			(xy 177.8 57.15) (xy 173.99 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "196a17b8-79d4-40e1-bdd1-c9da443e2b32")
+	)
+	(wire
+		(pts
 			(xy 179.07 36.83) (xy 160.02 36.83)
 		)
 		(stroke
@@ -3157,6 +3336,16 @@
 			(type default)
 		)
 		(uuid "1c78a92b-88e9-431b-a680-d4041fa24b68")
+	)
+	(wire
+		(pts
+			(xy 262.89 86.36) (xy 262.89 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "21c47b57-fc90-41cb-9285-42040ffbee36")
 	)
 	(wire
 		(pts
@@ -3180,6 +3369,16 @@
 	)
 	(wire
 		(pts
+			(xy 187.96 57.15) (xy 185.42 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "292de765-f0c6-4661-b815-4fc8102eee57")
+	)
+	(wire
+		(pts
 			(xy 67.31 33.02) (xy 68.58 33.02)
 		)
 		(stroke
@@ -3187,6 +3386,16 @@
 			(type default)
 		)
 		(uuid "2e4b0dc1-a8cf-4e64-ad7d-77fad1c81867")
+	)
+	(wire
+		(pts
+			(xy 160.02 57.15) (xy 166.37 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "34be114d-1c40-46b7-853a-c6ca1b84f05e")
 	)
 	(wire
 		(pts
@@ -3207,6 +3416,16 @@
 			(type default)
 		)
 		(uuid "3bef2d79-7c24-40e4-9a22-b9301be404bd")
+	)
+	(wire
+		(pts
+			(xy 153.67 85.09) (xy 153.67 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42f0616c-a9d3-40e1-a83d-36e66cfc8c74")
 	)
 	(wire
 		(pts
@@ -3287,6 +3506,16 @@
 			(type default)
 		)
 		(uuid "5dc6cc64-7405-437d-9589-340dd5997d12")
+	)
+	(wire
+		(pts
+			(xy 205.74 95.25) (xy 205.74 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "62df0edb-ef58-4554-a0a6-bba69740a98c")
 	)
 	(wire
 		(pts
@@ -3528,6 +3757,28 @@
 		)
 		(uuid "fa965c28-9d59-4713-9602-42fe36f4db6c")
 	)
+	(label "SWCLK{slash}JTAG_TCK"
+		(at 215.9 92.71 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "01f8e320-1071-4317-99b9-e949ea94024b")
+	)
+	(label "uart_rx"
+		(at 262.89 86.36 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "175e762d-f026-4c29-b9af-db6a91716f33")
+	)
 	(label "uart_rx"
 		(at 179.07 52.07 180)
 		(fields_autoplaced yes)
@@ -3627,6 +3878,17 @@
 		)
 		(uuid "8225aeb3-e8c0-4b02-96d1-dd5b9a7d3f3e")
 	)
+	(label "JTAG_TDI"
+		(at 273.05 58.42 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8dfb495e-42f5-4c20-b5b9-cbf8ce273a3f")
+	)
 	(label "SWDIO{slash}JTAG_TMS"
 		(at 179.07 41.91 180)
 		(fields_autoplaced yes)
@@ -3637,6 +3899,17 @@
 			(justify right bottom)
 		)
 		(uuid "8ef3c0df-8608-42be-ab7e-d85a101e8c93")
+	)
+	(label "JTAG_TDO"
+		(at 262.89 58.42 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9324f236-892c-4e21-a1fa-b14453528d09")
 	)
 	(label "SWRST{slash}JTAG_TRST"
 		(at 194.31 39.37 0)
@@ -3649,6 +3922,17 @@
 		)
 		(uuid "9d264c40-27a3-4179-9d6a-7c68f5c6d189")
 	)
+	(label "SWDIO{slash}JTAG_TMS"
+		(at 205.74 95.25 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9e66e914-d516-497b-be1a-f29d81d7c6d8")
+	)
 	(label "uart_tx"
 		(at 179.07 54.61 180)
 		(fields_autoplaced yes)
@@ -3659,6 +3943,28 @@
 			(justify right bottom)
 		)
 		(uuid "a6e81bcc-fe08-40d1-8993-cc6fd80d0c71")
+	)
+	(label "uart_tx"
+		(at 273.05 83.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b06f880b-345f-4c8d-8793-db64b2ea6c2d")
+	)
+	(label "SWRST{slash}JTAG_TRST"
+		(at 205.74 67.31 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "b96a0a3a-2018-48fb-a8cf-fda582e9c891")
 	)
 	(label "JTAG_TDI"
 		(at 233.68 39.37 180)
@@ -3693,183 +3999,21 @@
 		)
 		(uuid "e84fb6e5-79a7-4818-ba47-5570ec41542d")
 	)
-	(symbol
-		(lib_id "dk_TVS-Diodes:SRV05-4_TCT")
-		(at 181.61 85.09 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
+	(hierarchical_label "GND"
+		(shape passive)
+		(at 187.96 57.15 0)
 		(fields_autoplaced yes)
-		(uuid "0271caa7-12da-4ed7-90eb-104d67c3e78c")
-		(property "Reference" "D2"
-			(at 193.04 83.8199 90)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify right)
+		(effects
+			(font
+				(size 1.27 1.27)
 			)
+			(justify left)
 		)
-		(property "Value" "SRV05-4_TCT"
-			(at 193.04 86.3599 90)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "digikey-footprints:SOT-23-6"
-			(at 176.53 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.semtech.com/uploads/documents/srv05-4.pdf"
-			(at 173.99 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "TVS DIODE 5V 17.5V SOT23-6"
-			(at 181.61 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digi-Key_PN" "SRV05-4CT-ND"
-			(at 171.45 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "MPN" "SRV05-4.TCT"
-			(at 168.91 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Category" "Circuit Protection"
-			(at 166.37 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Family" "TVS - Diodes"
-			(at 163.83 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "DK_Datasheet_Link" "https://www.semtech.com/uploads/documents/srv05-4.pdf"
-			(at 161.29 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "DK_Detail_Page" "/product-detail/en/semtech-corporation/SRV05-4.TCT/SRV05-4CT-ND/1000987"
-			(at 158.75 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "TVS DIODE 5V 17.5V SOT23-6"
-			(at 156.21 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer" "Semtech Corporation"
-			(at 153.67 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Status" "Active"
-			(at 151.13 80.01 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(pin "4"
-			(uuid "fc83806a-ab00-40ae-a900-29d64313b404")
-		)
-		(pin "1"
-			(uuid "487b56ac-c10a-4a56-99c7-98611d5df46c")
-		)
-		(pin "6"
-			(uuid "3c79004a-019f-45ee-af87-dc16f063b35e")
-		)
-		(pin "3"
-			(uuid "13b4d149-4fa1-4732-9552-28329f852bc7")
-		)
-		(pin "2"
-			(uuid "c622142f-ba92-4175-94df-9cf0c5e26465")
-		)
-		(pin "5"
-			(uuid "9c41cebe-981e-48c9-bb8d-3ec629761a3e")
-		)
-		(instances
-			(project ""
-				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
-					(reference "D2")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "035b3569-caf4-40c8-852c-b8027ff57bdc")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 181.61 97.79 0)
+		(at 210.82 92.71 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3878,7 +4022,7 @@
 		(fields_autoplaced yes)
 		(uuid "08501d92-4c11-4d3f-b7b5-dda0d105193e")
 		(property "Reference" "#PWR012"
-			(at 181.61 104.14 0)
+			(at 210.82 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3887,7 +4031,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 181.61 102.87 0)
+			(at 210.82 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3895,7 +4039,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 181.61 97.79 0)
+			(at 210.82 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3904,7 +4048,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 181.61 97.79 0)
+			(at 210.82 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3913,7 +4057,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 181.61 97.79 0)
+			(at 210.82 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3928,6 +4072,247 @@
 			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "#PWR012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "dk_TVS-Diodes:SRV05-4_TCT")
+		(at 210.82 80.01 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0fd0966f-b949-4884-9366-56c474aa4426")
+		(property "Reference" "D2"
+			(at 222.25 78.7399 90)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "SRV05-4_TCT"
+			(at 222.25 81.2799 90)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "digikey-footprints:SOT-23-6"
+			(at 205.74 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.semtech.com/uploads/documents/srv05-4.pdf"
+			(at 203.2 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "TVS DIODE 5V 17.5V SOT23-6"
+			(at 210.82 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digi-Key_PN" "SRV05-4CT-ND"
+			(at 200.66 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "MPN" "SRV05-4.TCT"
+			(at 198.12 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Category" "Circuit Protection"
+			(at 195.58 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Family" "TVS - Diodes"
+			(at 193.04 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "DK_Datasheet_Link" "https://www.semtech.com/uploads/documents/srv05-4.pdf"
+			(at 190.5 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "DK_Detail_Page" "/product-detail/en/semtech-corporation/SRV05-4.TCT/SRV05-4CT-ND/1000987"
+			(at 187.96 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description_1" "TVS DIODE 5V 17.5V SOT23-6"
+			(at 185.42 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Semtech Corporation"
+			(at 182.88 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Status" "Active"
+			(at 180.34 74.93 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "e170a076-b1e8-4a45-943f-7d32ee23f5fe")
+		)
+		(pin "1"
+			(uuid "969ca177-39f9-4fb3-b80c-e50cf5d3b239")
+		)
+		(pin "6"
+			(uuid "d480cd63-c879-4a9b-a05b-27e1221f48d2")
+		)
+		(pin "3"
+			(uuid "49115b08-9e1f-445c-8a26-5dc891059c70")
+		)
+		(pin "2"
+			(uuid "dccd7418-db5d-464e-974d-fabf3577b018")
+		)
+		(pin "5"
+			(uuid "9df8af94-3d84-49ca-ab3d-2af7af4359f0")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "D2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 170.18 57.15 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1741396d-d80f-449b-8033-bb36fe792d28")
+		(property "Reference" "R8"
+			(at 170.18 59.182 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1kΩ"
+			(at 170.18 57.15 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 170.18 55.372 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 170.18 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 170.18 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f10da31c-509e-410e-a8e4-d7f368d75a32")
+		)
+		(pin "2"
+			(uuid "adca6ccc-eb5d-4241-8d3f-fa6e781a6e50")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -3996,6 +4381,72 @@
 			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 153.67 77.47 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1ee01686-6686-4d61-9d0a-2ec249a1989e")
+		(property "Reference" "#PWR016"
+			(at 153.67 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 153.67 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 153.67 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 153.67 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 153.67 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8e269ce7-d8d4-424f-af9b-aa3dd0d9cb9a")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -4175,6 +4626,73 @@
 			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "#PWR08")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 153.67 81.28 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3dcaf6b7-9a2d-47f2-a4dd-c748981dd9bb")
+		(property "Reference" "R9"
+			(at 155.702 81.28 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1kΩ"
+			(at 153.67 81.28 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 151.892 81.28 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 153.67 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 153.67 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d4311985-6721-47ef-a690-37106ccf21be")
+		)
+		(pin "2"
+			(uuid "e16dc742-3f78-422e-b18d-14e7ba424019")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -4388,7 +4906,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 220.98 73.66 0)
+		(at 267.97 58.42 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4397,7 +4915,7 @@
 		(fields_autoplaced yes)
 		(uuid "64accb0e-8898-4f93-a0d1-01668fcd4fdf")
 		(property "Reference" "#PWR015"
-			(at 220.98 77.47 0)
+			(at 267.97 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4406,7 +4924,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 220.98 68.58 0)
+			(at 267.97 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4414,7 +4932,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 220.98 73.66 0)
+			(at 267.97 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4423,7 +4941,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 220.98 73.66 0)
+			(at 267.97 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4432,7 +4950,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 220.98 73.66 0)
+			(at 267.97 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4637,8 +5155,78 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:LED")
+		(at 153.67 90.17 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7c6e23ff-a599-4f43-8b79-fa8f810dd4ed")
+		(property "Reference" "D4"
+			(at 157.48 90.4874 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "LED"
+			(at 157.48 93.0274 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+			(at 153.67 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 153.67 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 153.67 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b50c8610-10a9-4657-822e-4b0e06de8a12")
+		)
+		(pin "2"
+			(uuid "9150f768-d21a-41aa-b5d8-71250f7fbaff")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "dk_TVS-Diodes:SRV05-4_TCT")
-		(at 220.98 86.36 90)
+		(at 267.97 71.12 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4647,7 +5235,7 @@
 		(fields_autoplaced yes)
 		(uuid "889579e3-b982-4560-a5e8-e3799b33aeaf")
 		(property "Reference" "D3"
-			(at 232.41 85.0899 90)
+			(at 279.4 69.8499 90)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4656,7 +5244,7 @@
 			)
 		)
 		(property "Value" "SRV05-4_TCT"
-			(at 232.41 87.6299 90)
+			(at 279.4 72.3899 90)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4665,7 +5253,7 @@
 			)
 		)
 		(property "Footprint" "digikey-footprints:SOT-23-6"
-			(at 215.9 81.28 0)
+			(at 262.89 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4675,7 +5263,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.semtech.com/uploads/documents/srv05-4.pdf"
-			(at 213.36 81.28 0)
+			(at 260.35 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4685,7 +5273,7 @@
 			)
 		)
 		(property "Description" "TVS DIODE 5V 17.5V SOT23-6"
-			(at 220.98 86.36 0)
+			(at 267.97 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4694,7 +5282,7 @@
 			)
 		)
 		(property "Digi-Key_PN" "SRV05-4CT-ND"
-			(at 210.82 81.28 0)
+			(at 257.81 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4704,7 +5292,7 @@
 			)
 		)
 		(property "MPN" "SRV05-4.TCT"
-			(at 208.28 81.28 0)
+			(at 255.27 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4714,7 +5302,7 @@
 			)
 		)
 		(property "Category" "Circuit Protection"
-			(at 205.74 81.28 0)
+			(at 252.73 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4724,7 +5312,7 @@
 			)
 		)
 		(property "Family" "TVS - Diodes"
-			(at 203.2 81.28 0)
+			(at 250.19 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4734,7 +5322,7 @@
 			)
 		)
 		(property "DK_Datasheet_Link" "https://www.semtech.com/uploads/documents/srv05-4.pdf"
-			(at 200.66 81.28 0)
+			(at 247.65 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4744,7 +5332,7 @@
 			)
 		)
 		(property "DK_Detail_Page" "/product-detail/en/semtech-corporation/SRV05-4.TCT/SRV05-4CT-ND/1000987"
-			(at 198.12 81.28 0)
+			(at 245.11 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4754,7 +5342,7 @@
 			)
 		)
 		(property "Description_1" "TVS DIODE 5V 17.5V SOT23-6"
-			(at 195.58 81.28 0)
+			(at 242.57 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4764,7 +5352,7 @@
 			)
 		)
 		(property "Manufacturer" "Semtech Corporation"
-			(at 193.04 81.28 0)
+			(at 240.03 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4774,7 +5362,7 @@
 			)
 		)
 		(property "Status" "Active"
-			(at 190.5 81.28 0)
+			(at 237.49 66.04 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -4871,6 +5459,73 @@
 			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 181.61 57.15 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "91793005-164d-44ae-88c4-5e25f4b83a93")
+		(property "Reference" "D5"
+			(at 178.054 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LED"
+			(at 178.054 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
+			(at 181.61 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 181.61 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 181.61 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "de19cf9b-0c92-4c63-9557-268bd372c36a")
+		)
+		(pin "1"
+			(uuid "3b121017-a490-4b64-8200-24b5eb9810c6")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -5010,7 +5665,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 220.98 99.06 0)
+		(at 267.97 83.82 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5019,7 +5674,7 @@
 		(fields_autoplaced yes)
 		(uuid "a3eb17a6-548f-4aac-a09d-105a969f9b86")
 		(property "Reference" "#PWR013"
-			(at 220.98 105.41 0)
+			(at 267.97 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5028,7 +5683,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 220.98 104.14 0)
+			(at 267.97 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5036,7 +5691,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 220.98 99.06 0)
+			(at 267.97 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5045,7 +5700,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 220.98 99.06 0)
+			(at 267.97 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5054,7 +5709,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 220.98 99.06 0)
+			(at 267.97 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5076,7 +5731,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 181.61 72.39 0)
+		(at 210.82 67.31 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5085,7 +5740,7 @@
 		(fields_autoplaced yes)
 		(uuid "ae01bbd8-d95c-4bd7-85f2-88b1c8a08791")
 		(property "Reference" "#PWR014"
-			(at 181.61 76.2 0)
+			(at 210.82 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5094,7 +5749,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 181.61 67.31 0)
+			(at 210.82 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5102,7 +5757,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 181.61 72.39 0)
+			(at 210.82 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5111,7 +5766,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 181.61 72.39 0)
+			(at 210.82 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5120,7 +5775,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 181.61 72.39 0)
+			(at 210.82 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5401,6 +6056,72 @@
 			(project ""
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 153.67 93.98 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e6feca04-a935-4ee0-8f92-7e5d7eadc56a")
+		(property "Reference" "#PWR017"
+			(at 153.67 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 153.67 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 153.67 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 153.67 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 153.67 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6b2c9b06-dd91-4dc9-b565-ec3a6375a9b1")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -5822,6 +6543,16 @@
 				(justify right)
 			)
 			(uuid "07100abb-b627-4afd-aff8-82ea5897be81")
+		)
+		(pin "LED" output
+			(at 160.02 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "d12bf761-8a63-420d-913e-242de4e51a11")
 		)
 		(instances
 			(project "hpm_dap"

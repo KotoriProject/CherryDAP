@@ -1,6 +1,7 @@
-(version 1)
-
-(rule "length_test"
-	(constraint length (min 7mm) (max 7.5mm) )
-	(condition "A.NetClass == 'XTAL'" )
-)
+#(version 1)
+#
+#(rule "length_test"
+#	(constraint length (min 7mm) (max 7.5mm) )
+#	(condition "A.NetClass == 'XTAL'" )
+#)
+#
