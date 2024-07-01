@@ -2454,6 +2454,12 @@
 		(uuid "873f45fe-bc3f-49f5-9b8e-f7b2d6ade45f")
 	)
 	(junction
+		(at 39.37 81.28)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "959f469a-13d9-412b-9098-a1b64134ebe7")
+	)
+	(junction
 		(at 91.44 168.91)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2472,12 +2478,6 @@
 		(uuid "af303e07-ebe2-4542-9d05-3091e0ffc26a")
 	)
 	(junction
-		(at 178.8681 78.74)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "b5d84fc1-9b97-4067-b65f-b98a1127ccfc")
-	)
-	(junction
 		(at 59.69 81.28)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2490,10 +2490,10 @@
 		(uuid "c2805cb0-c850-4103-9680-d8a58b8fb5ef")
 	)
 	(junction
-		(at 178.8681 86.36)
+		(at 179.07 78.74)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "c9cc8126-bb89-4ba2-a5ed-fd24cfa447dc")
+		(uuid "ce3846eb-c466-4c62-8899-8c582c0e4020")
 	)
 	(junction
 		(at 83.82 166.37)
@@ -2551,7 +2551,7 @@
 	)
 	(wire
 		(pts
-			(xy 41.91 187.96) (xy 43.18 187.96)
+			(xy 39.37 187.96) (xy 40.64 187.96)
 		)
 		(stroke
 			(width 0)
@@ -2691,16 +2691,6 @@
 	)
 	(wire
 		(pts
-			(xy 60.96 187.96) (xy 91.44 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2da279ef-d12f-4722-9e99-4ffca14128fc")
-	)
-	(wire
-		(pts
 			(xy 130.81 114.3) (xy 138.43 114.3)
 		)
 		(stroke
@@ -2801,7 +2791,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.7081 86.36) (xy 178.8681 86.36)
+			(xy 168.7081 86.36) (xy 179.07 86.36)
 		)
 		(stroke
 			(width 0)
@@ -2821,7 +2811,7 @@
 	)
 	(wire
 		(pts
-			(xy 178.8681 78.74) (xy 179.07 78.74)
+			(xy 168.7081 78.74) (xy 179.07 78.74)
 		)
 		(stroke
 			(width 0)
@@ -2931,16 +2921,6 @@
 	)
 	(wire
 		(pts
-			(xy 178.8681 86.36) (xy 179.07 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "902a1067-b28b-40bb-96a6-d58515998249")
-	)
-	(wire
-		(pts
 			(xy 39.37 88.9) (xy 49.53 88.9)
 		)
 		(stroke
@@ -3031,6 +3011,16 @@
 	)
 	(wire
 		(pts
+			(xy 39.37 81.28) (xy 39.37 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a85b2fee-1d4e-44eb-a079-9d48c8b17e17")
+	)
+	(wire
+		(pts
 			(xy 370.84 48.26) (xy 381 48.26)
 		)
 		(stroke
@@ -3038,6 +3028,16 @@
 			(type default)
 		)
 		(uuid "a98c592b-b1dd-4ac4-a2fe-126f6ca4e040")
+	)
+	(wire
+		(pts
+			(xy 39.37 54.61) (xy 179.07 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aa58dbbb-2914-4dc2-9733-c05b387abf03")
 	)
 	(wire
 		(pts
@@ -3068,16 +3068,6 @@
 			(type default)
 		)
 		(uuid "b51a7c8a-33b4-4060-a8cf-09862bf03fa5")
-	)
-	(wire
-		(pts
-			(xy 168.7081 78.74) (xy 178.8681 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b55fb511-2bfc-460b-8a19-47719d430b88")
 	)
 	(wire
 		(pts
@@ -3148,6 +3138,16 @@
 			(type default)
 		)
 		(uuid "c0cf1f2f-5dbc-4da5-9df8-f9885f872b7e")
+	)
+	(wire
+		(pts
+			(xy 58.42 187.96) (xy 91.44 187.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1ce6cb4-3fd2-4769-8126-232e5a35785d")
 	)
 	(wire
 		(pts
@@ -3308,6 +3308,16 @@
 			(type default)
 		)
 		(uuid "e3b4c541-e0e3-4a65-98a7-4e466f1a1a39")
+	)
+	(wire
+		(pts
+			(xy 179.07 54.61) (xy 179.07 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e47da32d-4fa6-462d-b590-94a0ba6721fa")
 	)
 	(wire
 		(pts
@@ -3508,7 +3518,7 @@
 	)
 	(hierarchical_label "VDD"
 		(shape input)
-		(at 41.91 187.96 180)
+		(at 39.37 187.96 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3710,18 +3720,6 @@
 		)
 		(uuid "a5ec24eb-4857-4930-aae3-cd5861aaac36")
 	)
-	(hierarchical_label "VDD"
-		(shape input)
-		(at 179.07 78.74 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "aa3ffea0-7e73-4755-8dc8-2959e9e709b0")
-	)
 	(hierarchical_label "uart_tx"
 		(shape bidirectional)
 		(at 78.74 180.34 180)
@@ -3769,18 +3767,6 @@
 			(justify right)
 		)
 		(uuid "cc857537-8020-4e25-b11a-e1a9e97d1062")
-	)
-	(hierarchical_label "VDD"
-		(shape input)
-		(at 39.37 81.28 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "cdc8166a-5595-4f70-bac9-d83436f436f5")
 	)
 	(hierarchical_label "USB_D-"
 		(shape input)
@@ -3951,7 +3937,7 @@
 			(uuid "8e2c1919-4f8a-4c7d-9447-76bcb7481c95")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
 					(reference "R1")
 					(unit 1)
@@ -4168,7 +4154,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 178.8681 82.55 0)
+		(at 179.07 82.55 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4176,7 +4162,7 @@
 		(dnp no)
 		(uuid "17ca601a-0d5e-4942-b114-ea0edf09e1b7")
 		(property "Reference" "C7"
-			(at 181.1541 81.28 0)
+			(at 181.356 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4185,7 +4171,7 @@
 			)
 		)
 		(property "Value" "0.1uF"
-			(at 181.1541 83.82 0)
+			(at 181.356 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4194,7 +4180,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 179.8333 86.36 0)
+			(at 180.0352 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4203,7 +4189,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 178.8681 82.55 0)
+			(at 179.07 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4212,7 +4198,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 178.8681 82.55 0)
+			(at 179.07 82.55 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4310,7 +4296,7 @@
 	)
 	(symbol
 		(lib_id "Switch:SW_Push")
-		(at 55.88 187.96 0)
+		(at 45.72 187.96 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4319,7 +4305,7 @@
 		(fields_autoplaced yes)
 		(uuid "1b28d25c-ad1d-4051-8097-9dc4fba0a066")
 		(property "Reference" "SW1"
-			(at 55.88 180.34 0)
+			(at 45.72 180.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4327,7 +4313,7 @@
 			)
 		)
 		(property "Value" "SW_Push"
-			(at 55.88 182.88 0)
+			(at 45.72 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4335,7 +4321,7 @@
 			)
 		)
 		(property "Footprint" "Button_Switch_SMD:SW_Push_SPST_NO_Alps_SKRK"
-			(at 55.88 182.88 0)
+			(at 45.72 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4344,7 +4330,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 55.88 182.88 0)
+			(at 45.72 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4353,7 +4339,7 @@
 			)
 		)
 		(property "Description" "Push button switch, generic, two pins"
-			(at 55.88 187.96 0)
+			(at 45.72 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4368,7 +4354,7 @@
 			(uuid "99082b2d-35a7-49aa-81ea-187c60baa2fc")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
 					(reference "SW1")
 					(unit 1)
@@ -5547,7 +5533,7 @@
 			(uuid "5f245616-0da5-41ff-9f64-4dd739c9d44f")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
 					(reference "C1")
 					(unit 1)
@@ -6188,76 +6174,9 @@
 			(uuid "4396d45f-72d9-42ee-9267-043ff41cc2e9")
 		)
 		(instances
-			(project ""
-				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
-					(reference "L1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 46.99 187.96 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "df6c3f99-c101-4c1a-a2b8-9f58eba13237")
-		(property "Reference" "R5"
-			(at 46.99 185.928 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10kΩ"
-			(at 46.99 187.96 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 46.99 189.738 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 46.99 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 46.99 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8cba6f49-4108-4e21-98d3-9846a7f5fded")
-		)
-		(pin "2"
-			(uuid "5b8b157b-b2dc-41d7-8e0e-006da29e89ff")
-		)
-		(instances
 			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
-					(reference "R5")
+					(reference "L1")
 					(unit 1)
 				)
 			)
@@ -6539,7 +6458,7 @@
 			(uuid "0a383d56-cd45-4cb2-ad77-e48d6ad63e05")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
 					(reference "L2")
 					(unit 1)
@@ -6814,6 +6733,73 @@
 			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
 					(reference "C13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 54.61 187.96 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fa365f5a-ab37-4cb0-840a-1e9a6417a01e")
+		(property "Reference" "R5"
+			(at 54.61 185.928 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10kΩ"
+			(at 54.61 187.96 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 54.61 189.738 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 54.61 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 54.61 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6e01301e-4f51-4442-9c26-637e94f2e946")
+		)
+		(pin "2"
+			(uuid "a5ae6d8a-d82f-4f91-8105-3945c48d3600")
+		)
+		(instances
+			(project "hpm_dap"
+				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/d4d51e8b-0106-4120-b0f8-2449cdfd6410"
+					(reference "R5")
 					(unit 1)
 				)
 			)

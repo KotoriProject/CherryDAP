@@ -4557,7 +4557,7 @@
 			(uuid "a71d1101-4c7e-466f-bebc-20bba15a4ec3")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "J1")
 					(unit 1)
@@ -5146,7 +5146,7 @@
 			(uuid "4bf26382-91cd-4fbd-b163-cc476c63df4e")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "J2")
 					(unit 1)
@@ -5986,7 +5986,7 @@
 			(uuid "211b19b5-6e1c-455a-9db4-a4cc204b4717")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "#PWR01")
 					(unit 1)
@@ -6053,7 +6053,7 @@
 			(uuid "2918455b-5be2-4def-8f5c-ef1c693eac1f")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "R6")
 					(unit 1)
@@ -6262,7 +6262,7 @@
 			(uuid "40692ee4-68e2-4425-ae57-0bf1916ac49c")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "F1")
 					(unit 1)
@@ -6328,7 +6328,7 @@
 			(uuid "9ea212f5-748b-4f75-8ecd-3889a3a34f6c")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91"
 					(reference "#PWR04")
 					(unit 1)

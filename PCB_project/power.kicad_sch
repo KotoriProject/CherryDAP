@@ -1260,7 +1260,7 @@
 			(uuid "cffdabea-cef6-475e-8dd9-c04651ece0d9")
 		)
 		(instances
-			(project ""
+			(project "hpm_dap"
 				(path "/159ca461-ea29-45ac-b98a-f1d5e536ce91/8a695d02-741c-4133-8799-2185bd5ab9fa"
 					(reference "U2")
 					(unit 1)
