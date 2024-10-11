@@ -19,6 +19,8 @@ if (NOT DEFINED CONFIG_USE_HPM_BOARD_JTAG_GPIO OR (CONFIG_USE_HPM_BOARD_JTAG_GPI
     set(CONFIG_USE_SPI_SWD 1)
     set(CONFIG_USE_SPI_JTAG 1)
 endif ()
+# 屏蔽log打印
+set(CONFIG_NDEBUG_CONSOLE 1)
 
 find_package(hpm-sdk REQUIRED HINTS $ENV{HPM_SDK_BASE})
 
@@ -44,7 +46,8 @@ sdk_src(../../../CherryUSB/core/usbd_core.c)
 sdk_src(../../../CherryUSB/port/hpm/usb_dc_hpm.c)
 sdk_src(../../../CherryUSB/class/cdc/usbd_cdc_acm.c)
 sdk_src(../../../CherryUSB/class/hid/usbd_hid.c)
-
+#屏蔽log打印
+sdk_compile_definitions(-DCONFIG_NDEBUG_CONSOLE=1)
 # swj_clock default use keil swd frequency boost
 sdk_compile_definitions(-DBOOST_KEIL_SWD_FREQ=0)
 
