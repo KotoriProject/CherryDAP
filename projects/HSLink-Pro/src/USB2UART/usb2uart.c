@@ -10,15 +10,15 @@
 #include "dap_main.h"
 #include "usb2uart.h"
 
-#define UART_BASE                  HPM_UART2
-#define UART_IRQ                   IRQn_UART2
-#define UART_CLK_NAME              clock_uart2
-#define UART_RX_DMA                HPM_DMA_SRC_UART2_RX
+#define UART_BASE                  HPM_UART0
+#define UART_IRQ                   IRQn_UART0
+#define UART_CLK_NAME              clock_uart0
+#define UART_RX_DMA                HPM_DMA_SRC_UART0_RX
 #define UART_RX_DMA_RESOURCE_INDEX (0U)
 #define UART_RX_DMA_BUFFER_SIZE    (8192U)
 #define UART_RX_DMA_BUFFER_COUNT   (5)
 
-#define UART_TX_DMA                HPM_DMA_SRC_UART2_TX
+#define UART_TX_DMA                HPM_DMA_SRC_UART0_TX
 #define UART_TX_DMA_RESOURCE_INDEX (1U)
 // #define UART_TX_DMA_BUFFER_SIZE    (8192U)
 
@@ -114,19 +114,19 @@ void usb2uart_handler (void)
 void uartx_preinit(void)
 {
     // board_init_uart(UART_BASE);
-    HPM_IOC->PAD[PIN_UART_RX].FUNC_CTL = IOC_PA09_FUNC_CTL_UART2_RXD;
-    HPM_IOC->PAD[PIN_UART_TX].FUNC_CTL = IOC_PA08_FUNC_CTL_UART2_TXD;
+    HPM_IOC->PAD[PIN_UART_RX].FUNC_CTL = IOC_PA01_FUNC_CTL_UART0_RXD;
+    HPM_IOC->PAD[PIN_UART_TX].FUNC_CTL = IOC_PA00_FUNC_CTL_UART0_TXD;
 
-    HPM_IOC->PAD[PIN_UART_DTR].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
-    HPM_IOC->PAD[PIN_UART_RTS].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    // HPM_IOC->PAD[PIN_UART_DTR].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    // HPM_IOC->PAD[PIN_UART_RTS].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
 
-    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_UART_DTR), GPIO_GET_PIN_INDEX(PIN_UART_DTR), gpiom_soc_gpio0);
-    gpio_set_pin_output(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_DTR), GPIO_GET_PIN_INDEX(PIN_UART_DTR));
-    gpio_write_pin(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_DTR), GPIO_GET_PIN_INDEX(PIN_UART_DTR), 1); // 默认输出高电平
+    // gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_UART_DTR), GPIO_GET_PIN_INDEX(PIN_UART_DTR), gpiom_soc_gpio0);
+    // gpio_set_pin_output(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_DTR), GPIO_GET_PIN_INDEX(PIN_UART_DTR));
+    // gpio_write_pin(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_DTR), GPIO_GET_PIN_INDEX(PIN_UART_DTR), 1); // 默认输出高电平
 
-    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_UART_RTS), GPIO_GET_PIN_INDEX(PIN_UART_RTS), gpiom_soc_gpio0);
-    gpio_set_pin_output(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_RTS), GPIO_GET_PIN_INDEX(PIN_UART_RTS));
-    gpio_write_pin(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_RTS), GPIO_GET_PIN_INDEX(PIN_UART_RTS), 1); // 默认输出高电平
+    // gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_UART_RTS), GPIO_GET_PIN_INDEX(PIN_UART_RTS), gpiom_soc_gpio0);
+    // gpio_set_pin_output(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_RTS), GPIO_GET_PIN_INDEX(PIN_UART_RTS));
+    // gpio_write_pin(HPM_GPIO0, GPIO_GET_PORT_INDEX(PIN_UART_RTS), GPIO_GET_PIN_INDEX(PIN_UART_RTS), 1); // 默认输出高电平
 
     clock_set_source_divider(UART_CLK_NAME, clk_src_pll1_clk0, 8);
     clock_add_to_group(UART_CLK_NAME, 0);
