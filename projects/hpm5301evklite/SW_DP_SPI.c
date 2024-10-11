@@ -18,9 +18,7 @@
 #include "DAP_config.h"
 #include "DAP.h"
 
-#define SWD_SPI_BASE               BOARD_APP_SPI_BASE
-#define SWD_SPI_BASE_CLOCK_NAME    BOARD_APP_SPI_CLK_NAME
-#define SWD_SPI_SCLK_FREQ          (15000000UL)
+#define SWD_SPI_SCLK_FREQ          (20000000UL)
 
 #define SWD_SPI_DMA           BOARD_APP_HDMA
 #define SWD_SPI_DMAMUX        BOARD_APP_DMAMUX
@@ -39,6 +37,8 @@ static void swd_emulation_init(void);
 void PORT_SWD_SETUP(void)
 {
     board_init_spi_pins(SWD_SPI_BASE);
+    HPM_IOC->PAD[PIN_TCK].PAD_CTL = IOC_PAD_PAD_CTL_SR_MASK | IOC_PAD_PAD_CTL_SPD_SET(3);
+    HPM_IOC->PAD[PIN_TMS].PAD_CTL = IOC_PAD_PAD_CTL_SR_MASK | IOC_PAD_PAD_CTL_SPD_SET(3) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(0);
     swd_emulation_init();
 }
 
@@ -58,13 +58,18 @@ void SWJ_Sequence (uint32_t count, const uint8_t *data)
     SWD_SPI_BASE->CTRL |= SPI_CTRL_RXFIFORST_MASK | SPI_CTRL_TXFIFORST_MASK;
     while (SWD_SPI_BASE->STATUS & (SPI_CTRL_RXFIFORST_MASK | SPI_CTRL_TXFIFORST_MASK)) {
     };
-    spi_set_write_data_count(SWD_SPI_BASE, integer_val);
-    SWD_SPI_BASE->CMD = 0xFF;
-    for (n = 0; n < integer_val; n++) {
-        SWD_SPI_BASE->DATA = *(data + n);
+    if (integer_val > 0)
+    {
+        spi_set_data_bits(SWD_SPI_BASE, 8);
+        spi_set_write_data_count(SWD_SPI_BASE, integer_val);
+        SWD_SPI_BASE->CMD = 0xFF;
+        for (n = 0; n < integer_val; n++) {
+            SWD_SPI_BASE->DATA = *(data + n);
+        }
+        while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
+        }
     }
-    while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
-    };
+
     if (remaind_val > 0) {
         spi_set_write_data_count(SWD_SPI_BASE, 1);
         spi_set_data_bits(SWD_SPI_BASE, remaind_val);
@@ -183,16 +188,11 @@ uint8_t  SWD_Transfer(uint32_t request, uint32_t *data)
         for (i = 0; i < 32; i++) {
             parity += (((*data) >> i) & 0x01);
         }
-        spi_set_data_bits(SWD_SPI_BASE, 8 + DAP_Data.swd_conf.turnaround);
-        if (DAP_Data.swd_conf.turnaround > 0) {
-            host_data <<= 1;
-        }
+        spi_set_data_bits(SWD_SPI_BASE, 8);
         ack_width = 5;
     }
     SWD_SPI_BASE->CMD = 0xFF;
-    for (uint8_t i = 0; i < DAP_Data.swd_conf.turnaround; i++) {
-        SWD_SPI_BASE->DATA = host_data;
-    }
+    SWD_SPI_BASE->DATA = host_data;
     while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
     };
     spi_set_transfer_mode(SWD_SPI_BASE, spi_trans_read_only);
@@ -216,13 +216,25 @@ uint8_t  SWD_Transfer(uint32_t request, uint32_t *data)
             while ((SWD_SPI_BASE->STATUS & SPI_STATUS_RXEMPTY_MASK) == SPI_STATUS_RXEMPTY_MASK) {
             };
             dummy = SWD_SPI_BASE->DATA;
-            spi_set_data_bits(SWD_SPI_BASE, 1 + DAP_Data.swd_conf.turnaround);
+            spi_set_data_bits(SWD_SPI_BASE, 1);
             SWD_SPI_BASE->CMD = 0xFF;
             while ((SWD_SPI_BASE->STATUS & SPI_STATUS_RXEMPTY_MASK) == SPI_STATUS_RXEMPTY_MASK) {
             };
             parity = (SWD_SPI_BASE->DATA) & 0x01;
             while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
             };
+            /* Turnaround */
+            if (DAP_Data.swd_conf.turnaround > 0) {
+                SWD_SPI_BASE->TRANSCTRL = 0x01000000; /* only write mode*/
+                SWD_SPI_BASE->TRANSFMT = 0x0018; /* datalen = 1bit, mosibidir = 1, lsb=1 */
+                spi_set_write_data_count(SWD_SPI_BASE, DAP_Data.swd_conf.turnaround);
+                SWD_SPI_BASE->CMD = 0xFF;
+                SWD_SPI_BASE->DATA = 0;
+                while ((SWD_SPI_BASE->STATUS & SPI_STATUS_TXFULL_MASK) == SPI_STATUS_TXFULL_MASK) {
+                };
+                while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
+                };
+            }
             for (i = 0; i < 32U; i++) {
                 calc_parity += ((dummy >> i) & 0x01);
             }
@@ -239,7 +251,7 @@ uint8_t  SWD_Transfer(uint32_t request, uint32_t *data)
             SWD_SPI_BASE->DATA = (*data);
             while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
             };
-            spi_set_data_bits(SWD_SPI_BASE, 1 + DAP_Data.transfer.idle_cycles);
+            spi_set_data_bits(SWD_SPI_BASE, 1);
             SWD_SPI_BASE->CMD = 0xFF;
             SWD_SPI_BASE->DATA = parity;
             while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
@@ -247,6 +259,21 @@ uint8_t  SWD_Transfer(uint32_t request, uint32_t *data)
             /* Capture Timestamp */
             if (request & DAP_TRANSFER_TIMESTAMP) {
                 DAP_Data.timestamp = TIMESTAMP_GET();
+            }
+            if (DAP_Data.transfer.idle_cycles > 0) {
+                SWD_SPI_BASE->TRANSCTRL = 0x01000000; /* only write mode*/
+                SWD_SPI_BASE->TRANSFMT = 0x0018; /* datalen = 1bit, mosibidir = 1, lsb=1 */
+                spi_set_write_data_count(SWD_SPI_BASE, DAP_Data.transfer.idle_cycles);
+                SWD_SPI_BASE->CMD = 0xFF;
+                for (int i = 0; i < DAP_Data.transfer.idle_cycles; i++) {
+                    SWD_SPI_BASE->DATA = 0;
+                    while ((SWD_SPI_BASE->STATUS & SPI_STATUS_TXFULL_MASK) == SPI_STATUS_TXFULL_MASK) {
+                    };
+                }
+                while ((SWD_SPI_BASE->STATUS & SPI_STATUS_TXFULL_MASK) == SPI_STATUS_TXFULL_MASK) {
+                };
+                while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
+                };
             }
         }
         return ack;
@@ -268,11 +295,13 @@ uint8_t  SWD_Transfer(uint32_t request, uint32_t *data)
         }
         /* Turnaround */
         if (DAP_Data.swd_conf.turnaround > 0) {
+            SWD_SPI_BASE->TRANSCTRL = 0x01000000; /* only write mode*/
+            SWD_SPI_BASE->TRANSFMT = 0x0018; /* datalen = 1bit, mosibidir = 1, lsb=1 */
             spi_set_write_data_count(SWD_SPI_BASE, DAP_Data.swd_conf.turnaround);
             SWD_SPI_BASE->CMD = 0xFF;
-            while ((SWD_SPI_BASE->STATUS & SPI_STATUS_RXEMPTY_MASK) == SPI_STATUS_RXEMPTY_MASK) {
+            SWD_SPI_BASE->DATA = 0;
+            while ((SWD_SPI_BASE->STATUS & SPI_STATUS_TXFULL_MASK) == SPI_STATUS_TXFULL_MASK) {
             };
-            parity = (SWD_SPI_BASE->DATA) & 0x01;
             while (SWD_SPI_BASE->STATUS & SPI_STATUS_SPIACTIVE_MASK) {
             };
         }
@@ -294,6 +323,7 @@ uint8_t  SWD_Transfer(uint32_t request, uint32_t *data)
     }
     /* Protocol error */
     spi_set_transfer_mode(SWD_SPI_BASE, spi_trans_write_only);
+    spi_set_data_bits(SWD_SPI_BASE, 1);
     spi_set_write_data_count(SWD_SPI_BASE, DAP_Data.swd_conf.turnaround + 32U + 1U);
     SWD_SPI_BASE->CMD = 0xFF;
     for (i = 0; i < DAP_Data.swd_conf.turnaround + 32U + 1U; i++) {
@@ -348,23 +378,6 @@ static void swd_emulation_init(void)
     control_config.common_config.data_phase_fmt = spi_single_io_mode;
     control_config.common_config.dummy_cnt = spi_dummy_count_1;
     spi_control_init(SWD_SPI_BASE, &control_config, 1, 1);
-}
-
-void set_swj_clock_frequency(uint32_t clock)
-{
-    uint8_t div, sclk_div;
-    if (clock >= 10000000) {
-        sclk_div = 0xFF; /* 80M*/
-        div = 10;
-    } else if ((clock >= 1000000) && (clock < 10000000)) {
-        sclk_div = 0xFF; /* 50M*/
-        div = 16;
-    } else {
-        sclk_div = 1; /* 15M*/
-        div = 12;
-    }
-    spi_master_set_sclk_div(SWD_SPI_BASE, sclk_div);
-    clock_set_source_divider(SWD_SPI_BASE_CLOCK_NAME, clk_src_pll1_clk0, div);
 }
 
 

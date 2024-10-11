@@ -141,7 +141,7 @@ This information includes:
 /// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
 #define DAP_UART_USB_COM_PORT   1               ///< USB COM Port:  1 = available, 0 = not available.
 
-#define USE_SPI_GPIO            0
+
 /// Debug Unit is connected to fixed Target Device.
 /// The Debug Unit may be part of an evaluation board and always connected to a fixed
 /// known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings
@@ -274,56 +274,25 @@ __STATIC_INLINE uint8_t DAP_GetProductFirmwareVersionString (char *str) {
 #include "hpm_csr_drv.h"
 #include "hpm_clock_drv.h"
 
-/*SPI
-MISO----TDO  PA28
-MOSI----TDI  PA29
-SCLK----TCK  PA27
-CE0-----TMS  PA26
-NRESET--IO   PA31
-*/
+#define JTAG_SPI_BASE               HPM_SPI2
+#define JTAG_SPI_BASE_CLOCK_NAME    clock_spi2
 
-/*GPIO
-TDO          PA04
-TDI          PA05
-TCK          PA06
-TMS          PA07
-NRESET--IO   PA31
-*/
-
-#define PIN_LED           IOC_PAD_PA10
-#define PIN_LED_NUM       10
-
-#if defined(USE_SPI_GPIO) && (USE_SPI_GPIO == 1)
+#define SWD_SPI_BASE               HPM_SPI1
+#define SWD_SPI_BASE_CLOCK_NAME    clock_spi1
 
 #define PIN_GPIOM_BASE    HPM_GPIOM
-#define PIN_GPIO          HPM_FGPIO
-#define PIN_PORT          GPIO_OE_GPIOA
-#define PIN_TCK           IOC_PAD_PA27
-#define PIN_TMS           IOC_PAD_PA26
-#define PIN_TDI           IOC_PAD_PA29
-#define PIN_TDO           IOC_PAD_PA28
-#define PIN_nRESET        IOC_PAD_PA31
+#define PIN_GPIO          HPM_GPIO0
 
-#define PIN_TCK_NUM      27
-#define PIN_TMS_NUM      26
-#define PIN_TDI_NUM      29
-#define PIN_TDO_NUM      28
-#define PIN_nRESET_NUM   31
+#if defined(USE_HPM_BOARD_JTAG_GPIO) && (USE_HPM_BOARD_JTAG_GPIO == 1)
+    #define PIN_TCK                         IOC_PAD_PA06
+    #define PIN_TMS                         IOC_PAD_PA07
+    #define PIN_TDI                         IOC_PAD_PA05
+    #define PIN_TDO                         IOC_PAD_PA04
 #else
-#define PIN_GPIOM_BASE                  HPM_GPIOM
-#define PIN_GPIO                        HPM_FGPIO
-#define PIN_PORT                        GPIO_OE_GPIOA
-#define PIN_TCK                         IOC_PAD_PA06
-#define PIN_TMS                         IOC_PAD_PA07
-#define PIN_TDI                         IOC_PAD_PA05
-#define PIN_TDO                         IOC_PAD_PA04
-#define PIN_nRESET                      IOC_PAD_PA08
-
-#define PIN_TCK_NUM      6
-#define PIN_TMS_NUM      7
-#define PIN_TDI_NUM      5
-#define PIN_TDO_NUM      4
-#define PIN_nRESET_NUM   8
+    #define PIN_TCK           IOC_PAD_PB11
+    #define PIN_TMS           IOC_PAD_PA29
+    #define PIN_TDI           IOC_PAD_PB13
+    #define PIN_TDO           IOC_PAD_PB12
 #endif
 
 //**************************************************************************************************
@@ -369,67 +338,79 @@ Configures the DAP Hardware I/O pins for JTAG mode:
  - TCK, TMS, TDI, nTRST, nRESET to output mode and set to high level.
  - TDO to input mode.
 */
-__STATIC_INLINE void gpiom_configure_pin_control_setting(uint8_t pin_index)
+__STATIC_INLINE void gpiom_configure_pin_control_setting(uint16_t gpio_index)
 {
-    gpiom_set_pin_controller(PIN_GPIOM_BASE, PIN_PORT, pin_index, gpiom_core0_fast);
-    gpiom_enable_pin_visibility(PIN_GPIOM_BASE, PIN_PORT, pin_index, gpiom_core0_fast);
-    gpiom_lock_pin(PIN_GPIOM_BASE, PIN_PORT, pin_index);
+    gpiom_set_pin_controller(PIN_GPIOM_BASE, GPIO_GET_PORT_INDEX(gpio_index), GPIO_GET_PIN_INDEX(gpio_index), gpiom_soc_gpio0);
+    gpiom_enable_pin_visibility(PIN_GPIOM_BASE, GPIO_GET_PORT_INDEX(gpio_index), GPIO_GET_PIN_INDEX(gpio_index), gpiom_soc_gpio0);
+    gpiom_lock_pin(PIN_GPIOM_BASE, GPIO_GET_PORT_INDEX(gpio_index), GPIO_GET_PIN_INDEX(gpio_index));
 }
 
-
+#if !defined(USE_SPI_JTAG) || (USE_SPI_JTAG  == 0) 
 __STATIC_INLINE void PORT_JTAG_SETUP (void) {
     HPM_IOC->PAD[PIN_TCK].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0) | IOC_PAD_FUNC_CTL_LOOP_BACK_MASK; /* as gpio*/
     HPM_IOC->PAD[PIN_TMS].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0); /* as gpio*/
     HPM_IOC->PAD[PIN_TDI].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0); /* as gpio*/
     HPM_IOC->PAD[PIN_TDO].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
-    HPM_IOC->PAD[PIN_nRESET].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
-    HPM_IOC->PAD[PIN_LED].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_JTAG_TRST].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_SRST].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_LED_RUNNING].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_LED_CONNECTED].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
 
-    gpiom_configure_pin_control_setting(PIN_TDO_NUM);
-    gpiom_configure_pin_control_setting(PIN_TCK_NUM);
-    gpiom_configure_pin_control_setting(PIN_TMS_NUM);
-    gpiom_configure_pin_control_setting(PIN_TDI_NUM);
-    gpiom_configure_pin_control_setting(PIN_nRESET_NUM);
-    gpiom_configure_pin_control_setting(PIN_LED_NUM);
+    gpiom_configure_pin_control_setting(PIN_TDO);
+    gpiom_configure_pin_control_setting(PIN_TCK);
+    gpiom_configure_pin_control_setting(PIN_TMS);
+    gpiom_configure_pin_control_setting(PIN_TDI);
+    gpiom_configure_pin_control_setting(PIN_JTAG_TRST);
+    gpiom_configure_pin_control_setting(PIN_SRST);
+    gpiom_configure_pin_control_setting(PIN_LED_RUNNING);
+    gpiom_configure_pin_control_setting(PIN_LED_CONNECTED);
 
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_TDO_NUM);
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_TCK_NUM);
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_TDI_NUM);
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_LED_NUM);
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDO), GPIO_GET_PIN_INDEX(PIN_TDO));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_RUNNING), GPIO_GET_PIN_INDEX(PIN_LED_RUNNING));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_CONNECTED), GPIO_GET_PIN_INDEX(PIN_LED_CONNECTED));
     HPM_IOC->PAD[PIN_TDO].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
     HPM_IOC->PAD[PIN_TCK].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
     HPM_IOC->PAD[PIN_TMS].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
     HPM_IOC->PAD[PIN_TDI].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
-    HPM_IOC->PAD[PIN_nRESET].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
+    HPM_IOC->PAD[PIN_JTAG_TRST].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
+    HPM_IOC->PAD[PIN_SRST].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
 }
+#else
+void PORT_JTAG_SETUP(void);
+#endif
 
 /** Setup SWD I/O pins: SWCLK, SWDIO, and nRESET.
 Configures the DAP Hardware I/O pins for Serial Wire Debug (SWD) mode:
  - SWCLK, SWDIO, nRESET to output mode and set to default high level.
  - TDI, nTRST to HighZ mode (pins are unused in SWD mode).
 */
-#ifndef USE_SPI_SWD
+#if !defined(USE_SPI_SWD) || (USE_SPI_SWD  == 0) 
 __STATIC_INLINE void PORT_SWD_SETUP (void) {
 
 
     HPM_IOC->PAD[PIN_TCK].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0) | IOC_PAD_FUNC_CTL_LOOP_BACK_MASK; /* as gpio*/
     HPM_IOC->PAD[PIN_TMS].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0); /* as gpio*/
-    HPM_IOC->PAD[PIN_nRESET].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
-    HPM_IOC->PAD[PIN_LED].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_SRST].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_LED_RUNNING].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_LED_CONNECTED].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
 
-    gpiom_configure_pin_control_setting(PIN_TCK_NUM);
-    gpiom_configure_pin_control_setting(PIN_TMS_NUM);
-    gpiom_configure_pin_control_setting(PIN_nRESET_NUM);
-    gpiom_configure_pin_control_setting(PIN_LED_NUM);
-
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_TCK_NUM);
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
-    gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_LED_NUM);
+    gpiom_configure_pin_control_setting(PIN_TCK);
+    gpiom_configure_pin_control_setting(PIN_TMS);
+    gpiom_configure_pin_control_setting(PIN_SRST);
+    gpiom_configure_pin_control_setting(PIN_LED_RUNNING);
+    gpiom_configure_pin_control_setting(PIN_LED_CONNECTED);
+  
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_RUNNING), GPIO_GET_PIN_INDEX(PIN_LED_RUNNING));
+    gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_CONNECTED), GPIO_GET_PIN_INDEX(PIN_LED_CONNECTED));
 
     HPM_IOC->PAD[PIN_TCK].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
     HPM_IOC->PAD[PIN_TMS].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
-    HPM_IOC->PAD[PIN_nRESET].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
+    HPM_IOC->PAD[PIN_SRST].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1) | IOC_PAD_PAD_CTL_SPD_SET(3);
 }
 #else
 void PORT_SWD_SETUP(void);
@@ -451,28 +432,35 @@ __STATIC_INLINE void PORT_OFF (void) {
     HPM_IOC->PAD[PIN_TDO].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2);
     HPM_IOC->PAD[PIN_TDO].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
 
-    HPM_IOC->PAD[PIN_nRESET].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2);
-    HPM_IOC->PAD[PIN_nRESET].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
+    HPM_IOC->PAD[PIN_SRST].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2);
+    HPM_IOC->PAD[PIN_SRST].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
 
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_TCK_NUM);
-    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_IE_GPIOA, PIN_TCK_NUM);
-    gpiom_set_pin_controller(HPM_GPIOM, GPIOM_ASSIGN_GPIOA, PIN_TCK_NUM, gpiom_soc_gpio0);
+    HPM_IOC->PAD[PIN_JTAG_TRST].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2);
+    HPM_IOC->PAD[PIN_JTAG_TRST].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
 
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
-    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_IE_GPIOA, PIN_TMS_NUM);
-    gpiom_set_pin_controller(HPM_GPIOM, GPIOM_ASSIGN_GPIOA, PIN_TMS_NUM, gpiom_soc_gpio0);
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK), gpiom_soc_gpio0);
 
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_TDI_NUM);
-    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_IE_GPIOA, PIN_TDI_NUM);
-    gpiom_set_pin_controller(HPM_GPIOM, GPIOM_ASSIGN_GPIOA, PIN_TDI_NUM, gpiom_soc_gpio0);
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS), gpiom_soc_gpio0);
 
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_TDO_NUM);
-    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_IE_GPIOA, PIN_TDO_NUM);
-    gpiom_set_pin_controller(HPM_GPIOM, GPIOM_ASSIGN_GPIOA, PIN_TDO_NUM, gpiom_soc_gpio0);
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI), gpiom_soc_gpio0);
 
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM);
-    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_IE_GPIOA, PIN_nRESET_NUM);
-    gpiom_set_pin_controller(HPM_GPIOM, GPIOM_ASSIGN_GPIOA, PIN_nRESET_NUM, gpiom_soc_gpio0);
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDO), GPIO_GET_PIN_INDEX(PIN_TDO));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDO), GPIO_GET_PIN_INDEX(PIN_TDO));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_TDO), GPIO_GET_PIN_INDEX(PIN_TDO), gpiom_soc_gpio0);
+
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_SRST), GPIO_GET_PIN_INDEX(PIN_SRST));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_SRST), GPIO_GET_PIN_INDEX(PIN_SRST));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_SRST), GPIO_GET_PIN_INDEX(PIN_SRST), gpiom_soc_gpio0);
+
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_JTAG_TRST), GPIO_GET_PIN_INDEX(PIN_JTAG_TRST));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_JTAG_TRST), GPIO_GET_PIN_INDEX(PIN_JTAG_TRST));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_JTAG_TRST), GPIO_GET_PIN_INDEX(PIN_JTAG_TRST), gpiom_soc_gpio0);
 }
 
 
@@ -482,7 +470,7 @@ __STATIC_INLINE void PORT_OFF (void) {
 \return Current status of the SWCLK/TCK DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_SWCLK_TCK_IN  (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_TCK_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -491,7 +479,7 @@ __STATIC_FORCEINLINE uint32_t PIN_SWCLK_TCK_IN  (void) {
 Set the SWCLK/TCK DAP hardware I/O pin to high level.;
 */
 __STATIC_FORCEINLINE void     PIN_SWCLK_TCK_SET (void) {
-    gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TCK_NUM, true);
+    gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK), true);
     __asm volatile("fence io, io");
 }
 
@@ -499,7 +487,7 @@ __STATIC_FORCEINLINE void     PIN_SWCLK_TCK_SET (void) {
 Set the SWCLK/TCK DAP hardware I/O pin to low level.
 */
 __STATIC_FORCEINLINE void     PIN_SWCLK_TCK_CLR (void) {
-    gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TCK_NUM, false);
+    gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TCK), GPIO_GET_PIN_INDEX(PIN_TCK), false);
     __asm volatile("fence io, io");
 }
 
@@ -510,7 +498,7 @@ __STATIC_FORCEINLINE void     PIN_SWCLK_TCK_CLR (void) {
 \return Current status of the SWDIO/TMS DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_SWDIO_TMS_IN  (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -519,7 +507,7 @@ __STATIC_FORCEINLINE uint32_t PIN_SWDIO_TMS_IN  (void) {
 Set the SWDIO/TMS DAP hardware I/O pin to high level.
 */
 __STATIC_FORCEINLINE void     PIN_SWDIO_TMS_SET (void) {
-    gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TMS_NUM, true);
+    gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS), true);
     __asm volatile("fence io, io");
 }
 
@@ -527,7 +515,7 @@ __STATIC_FORCEINLINE void     PIN_SWDIO_TMS_SET (void) {
 Set the SWDIO/TMS DAP hardware I/O pin to low level.
 */
 __STATIC_FORCEINLINE void     PIN_SWDIO_TMS_CLR (void) {
-    gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TMS_NUM, false);
+    gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS), false);
     __asm volatile("fence io, io");
 }
 
@@ -535,7 +523,7 @@ __STATIC_FORCEINLINE void     PIN_SWDIO_TMS_CLR (void) {
 \return Current status of the SWDIO DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_SWDIO_IN      (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -545,10 +533,10 @@ __STATIC_FORCEINLINE uint32_t PIN_SWDIO_IN      (void) {
 */
 __STATIC_FORCEINLINE void     PIN_SWDIO_OUT     (uint32_t bit) {
   if(bit & 0x01) {
-     gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TMS_NUM, true);
+     gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS), true);
   }
   else {
-    gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TMS_NUM, false);
+    gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS), false);
   }
   __asm volatile("fence io, io");
 }
@@ -560,8 +548,8 @@ called prior \ref PIN_SWDIO_OUT function calls.
 __STATIC_FORCEINLINE void     PIN_SWDIO_OUT_ENABLE  (void) {
   HPM_IOC->PAD[PIN_TMS].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0); /* as gpio*/
   HPM_IOC->PAD[PIN_TMS].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2) | IOC_PAD_PAD_CTL_PE_SET(1) | IOC_PAD_PAD_CTL_PS_SET(1);
-  gpiom_configure_pin_control_setting(PIN_TMS_NUM);
-  gpio_set_pin_output(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
+  gpiom_configure_pin_control_setting(PIN_TMS);
+  gpio_set_pin_output(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
 }
 
 /** SWDIO I/O pin: Switch to Input mode (used in SWD mode only).
@@ -571,9 +559,9 @@ called prior \ref PIN_SWDIO_IN function calls.
 __STATIC_FORCEINLINE void     PIN_SWDIO_OUT_DISABLE (void) {
     HPM_IOC->PAD[PIN_TMS].PAD_CTL = IOC_PAD_PAD_CTL_PRS_SET(2);
     HPM_IOC->PAD[PIN_TMS].FUNC_CTL = IOC_PAD_FUNC_CTL_ALT_SELECT_SET(0);
-    gpio_set_pin_input(PIN_GPIO, PIN_PORT, PIN_TMS_NUM);
-    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_IE_GPIOA, PIN_TMS_NUM);
-    gpiom_set_pin_controller(HPM_GPIOM, GPIOM_ASSIGN_GPIOA, PIN_TMS_NUM, gpiom_soc_gpio0);
+    gpio_set_pin_input(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
+    gpio_disable_pin_interrupt(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS));
+    gpiom_set_pin_controller(HPM_GPIOM, GPIO_GET_PORT_INDEX(PIN_TMS), GPIO_GET_PIN_INDEX(PIN_TMS), gpiom_soc_gpio0);
 }
 
 
@@ -583,7 +571,7 @@ __STATIC_FORCEINLINE void     PIN_SWDIO_OUT_DISABLE (void) {
 \return Current status of the TDI DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_TDI_IN  (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_TDI_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -594,10 +582,10 @@ __STATIC_FORCEINLINE uint32_t PIN_TDI_IN  (void) {
 __STATIC_FORCEINLINE void     PIN_TDI_OUT (uint32_t bit) {
 
   if(bit & 0x01) {
-     gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TDI_NUM, true);
+     gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI), true);
   }
   else {
-     gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_TDI_NUM, false);
+     gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDI), GPIO_GET_PIN_INDEX(PIN_TDI), false);
   }
   __asm volatile("fence io, io");
 }
@@ -609,7 +597,7 @@ __STATIC_FORCEINLINE void     PIN_TDI_OUT (uint32_t bit) {
 \return Current status of the TDO DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_TDO_IN  (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_TDO_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_TDO), GPIO_GET_PIN_INDEX(PIN_TDO));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -621,7 +609,7 @@ __STATIC_FORCEINLINE uint32_t PIN_TDO_IN  (void) {
 \return Current status of the nTRST DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_nTRST_IN   (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_JTAG_TRST), GPIO_GET_PIN_INDEX(PIN_JTAG_TRST));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -633,10 +621,10 @@ __STATIC_FORCEINLINE uint32_t PIN_nTRST_IN   (void) {
 */
 __STATIC_FORCEINLINE void     PIN_nTRST_OUT  (uint32_t bit) {
     if(bit & 0x01) {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM, true);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_JTAG_TRST), GPIO_GET_PIN_INDEX(PIN_JTAG_TRST), true);
     }
     else {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM, false);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_JTAG_TRST), GPIO_GET_PIN_INDEX(PIN_JTAG_TRST), false);
     }
     __asm volatile("fence io, io");
 }
@@ -647,7 +635,7 @@ __STATIC_FORCEINLINE void     PIN_nTRST_OUT  (uint32_t bit) {
 \return Current status of the nRESET DAP hardware I/O pin.
 */
 __STATIC_FORCEINLINE uint32_t PIN_nRESET_IN  (void) {
-    uint32_t sta =  gpio_read_pin(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM);
+    uint32_t sta =  gpio_read_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_SRST), GPIO_GET_PIN_INDEX(PIN_SRST));
     __asm volatile("fence io, io");
     return sta;
 }
@@ -659,10 +647,10 @@ __STATIC_FORCEINLINE uint32_t PIN_nRESET_IN  (void) {
 */
 __STATIC_FORCEINLINE void     PIN_nRESET_OUT (uint32_t bit) {
     if(bit & 0x01) {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM, true);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_SRST), GPIO_GET_PIN_INDEX(PIN_SRST), true);
     }
     else {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_nRESET_NUM, false);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_SRST), GPIO_GET_PIN_INDEX(PIN_SRST), false);
     }
     __asm volatile("fence io, io");
 }
@@ -690,10 +678,10 @@ It is recommended to provide the following LEDs for status indication:
 */
 __STATIC_INLINE void LED_CONNECTED_OUT (uint32_t bit) {
     if(bit & 0x01) {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_LED_NUM, true);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_CONNECTED), GPIO_GET_PIN_INDEX(PIN_LED_RUNNING), true);
     }
     else {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_LED_NUM, false);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_CONNECTED), GPIO_GET_PIN_INDEX(PIN_LED_RUNNING), false);
     }
     __asm volatile("fence io, io");
 }
@@ -705,10 +693,10 @@ __STATIC_INLINE void LED_CONNECTED_OUT (uint32_t bit) {
 */
 __STATIC_INLINE void LED_RUNNING_OUT (uint32_t bit) {
     if(bit & 0x01) {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_LED_NUM, true);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_RUNNING), GPIO_GET_PIN_INDEX(PIN_LED_RUNNING), true);
     }
     else {
-       gpio_write_pin(PIN_GPIO, PIN_PORT, PIN_LED_NUM, false);
+       gpio_write_pin(PIN_GPIO, GPIO_GET_PORT_INDEX(PIN_LED_RUNNING), GPIO_GET_PIN_INDEX(PIN_LED_RUNNING), false);
     }
     __asm volatile("fence io, io");
 }
